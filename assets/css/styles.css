@@ -7,11 +7,14 @@
   --max-width:900px;
   --project-image-height: 520px;
   --project-caption-height: 5.2rem;
+  --header-height: 78px;
 }
 *{box-sizing:border-box}
 html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial; background:var(--bg); color:var(--text);}
+body{padding-top:var(--header-height);}
 .container{max-width:var(--max-width);margin:0 auto;padding:1.25rem}
-.site-header{border-bottom:1px solid rgba(10,10,10,0.06);padding:0.6rem 0;background:var(--card);position:sticky;top:0;z-index:40}
+.site-header{border-bottom:1px solid rgba(10,10,10,0.06);padding:0.35rem 0;background:var(--card);position:fixed;top:0;left:0;right:0;z-index:100;box-shadow:0 4px 16px rgba(15,23,42,0.06)}
+.site-header .container{padding:0 1.25rem;display:flex;align-items:center;height:100%}
 .site-title{margin:0;font-size:1.25rem;letter-spacing:0.01em;color:var(--text)}
 .subtitle{margin:0.25rem 0 0;color:var(--muted)}
 
@@ -20,9 +23,9 @@ html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-
 .top-nav a:hover{color:#1f2937}
 
 /* Header brand/logo */
-.brand{display:flex;align-items:center;gap:0.75rem}
-.brand-logo{width:160px;height:160px;object-fit:contain;display:block;border-radius:6px;margin-left:0.5rem;max-height:80px;transform:translateY(6px)}
-.partner-logo{width:128px;height:128px;object-fit:contain;display:block;border-radius:6px;margin-left:0.5rem;max-height:72px;opacity:0.95}
+.brand{display:flex;align-items:center;gap:0.65rem}
+.brand-logo{width:140px;height:140px;object-fit:contain;display:block;border-radius:6px;margin-left:0.25rem;max-height:58px;transform:translateY(4px)}
+.partner-logo{width:110px;height:110px;object-fit:contain;display:block;border-radius:6px;margin-left:0.35rem;max-height:52px;opacity:0.95}
 
 /* Intro card (headshot + bio) */
 .intro-card{display:block}
@@ -81,7 +84,7 @@ html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-
 }
 
 /* Make sure anchored sections aren't hidden under sticky header */
-section[id]{scroll-margin-top:80px}
+section[id]{scroll-margin-top:calc(var(--header-height) + 12px)}
 
 /* Slideshow styles */
 .slideshow{position:relative;display:flex;align-items:center;gap:0.75rem}
