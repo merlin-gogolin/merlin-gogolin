@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Merlin Gogolin — Portfolio</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav-row">
+        <div class="brand">
+          <h1 class="site-title">Merlin Gogolin</h1>
+          <img src="images/meche_logo.png" alt="MIT Mechanical Engineering logo" class="brand-logo" />
+          <img src="images/mit_logo.png" alt="MIT logo" class="partner-logo" />
+        </div>
+        <nav class="top-nav" aria-label="Primary">
+          <a href="#hardware">Hardware</a>
+          <a href="#software">Software</a>
+          <a href="#experience">Experience</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <!-- Single-page anchors -->
+      <section class="card intro-card" aria-labelledby="bio-heading">
+        <div class="bio-layout">
+          <div class="bio-text">
+            <h2 id="bio-heading" class="bio-title">Merlin Gogolin</h2>
+            <p class="bio-summary">Add a brief description here to introduce yourself and highlight your focus areas.</p>
+          </div>
+          <div class="bio-photo">
+            <img src="images/headshot.JPG" alt="Headshot of Merlin Gogolin" class="bio-headshot" />
+          </div>
+        </div>
+      </section>
+
+      <section id="hardware" class="card">
+        <h2>Hardware</h2>
+        <div class="slideshow" data-slideshow="hardware">
+          <button class="slide-btn prev" aria-label="Previous">‹</button>
+          <div class="slides">
+            <article class="slide" data-index="0">
+              <div class="media-placeholder">Image 1</div>
+              <div class="caption">MIT 2.007 robot. Scored the highest point total in the class during the semester.</div>
+            </article>
+            <article class="slide" data-index="1">
+              <div class="media-placeholder">Image 2</div>
+              <div class="caption">Hardware project 2 — short description</div>
+            </article>
+          </div>
+          <button class="slide-btn next" aria-label="Next">›</button>
+        </div>
+      </section>
+
+      <section id="software" class="card">
+        <h2>Software</h2>
+        <div class="slideshow" data-slideshow="software">
+          <button class="slide-btn prev" aria-label="Previous">‹</button>
+          <div class="slides">
+            <article class="slide" data-index="0">
+              <div class="media-placeholder">Screenshot 1</div>
+              <div class="caption">Software project 1 — short description</div>
+            </article>
+            <article class="slide" data-index="1">
+              <div class="media-placeholder">Screenshot 2</div>
+              <div class="caption">Software project 2 — short description</div>
+            </article>
+          </div>
+          <button class="slide-btn next" aria-label="Next">›</button>
+        </div>
+      </section>
+
+      <section id="experience" class="card">
+        <h2>Experience</h2>
+        <p class="muted">Work history and notable achievements.</p>
+      </section>
+
+      <section id="contact" class="card">
+        <h2>Contact</h2>
+        <p class="muted">Email, social links, or a contact form later.</p>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <small>© <span id="year"></span> Merlin Gogolin</small>
+      </div>
+    </footer>
+
+    <script>
+      // Small modular script: set the current year and enable future enhancements
+      document.getElementById('year').textContent = new Date().getFullYear();
+
+      // Enable smooth scrolling for in-page anchors (improve browser defaults)
+      document.documentElement.style.scrollBehavior = 'smooth';
+      
+      // Simple slideshow behavior for any .slideshow container
+      (function () {
+        function initSlideshow(container) {
+          const slides = Array.from(container.querySelectorAll('.slide'));
+          if (!slides.length) return;
+
+          const prevBtn = container.querySelector('.slide-btn.prev');
+          const nextBtn = container.querySelector('.slide-btn.next');
+          let index = 0;
+
+          const update = () => {
+            slides.forEach((slide, idx) => {
+              slide.classList.toggle('is-active', idx === index);
+            });
+
+            if (slides.length <= 1) {
+              prevBtn?.setAttribute('hidden', '');
+              nextBtn?.setAttribute('hidden', '');
+            } else {
+              prevBtn?.removeAttribute('hidden');
+              nextBtn?.removeAttribute('hidden');
+            }
+          };
+
+          const move = (delta) => {
+            index = (index + delta + slides.length) % slides.length;
+            update();
+          };
+
+          prevBtn?.addEventListener('click', (event) => {
+            event.preventDefault();
+            move(-1);
+          });
+
+          nextBtn?.addEventListener('click', (event) => {
+            event.preventDefault();
+            move(1);
+          });
+
+          update();
+        }
+
+        document.querySelectorAll('.slideshow').forEach(initSlideshow);
+      })();
+    </script>
+  </body>
+</html>
