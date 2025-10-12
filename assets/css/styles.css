@@ -5,6 +5,8 @@
   --accent: #334155;
   --text: #0b1220;
   --max-width:900px;
+  --project-image-height: 520px;
+  --project-caption-height: 5.2rem;
 }
 *{box-sizing:border-box}
 html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial; background:var(--bg); color:var(--text);}
@@ -83,13 +85,13 @@ section[id]{scroll-margin-top:80px}
 
 /* Slideshow styles */
 .slideshow{position:relative;display:flex;align-items:center;gap:0.75rem}
-.slides{flex:1;overflow:hidden;position:relative;min-height:260px}
-.slide{display:none;width:100%;padding:0.75rem;border-radius:8px;background:var(--card);box-shadow:0 6px 16px rgba(15,23,42,0.06);border:1px solid rgba(0,0,0,0.04);flex-direction:column;gap:0.5rem;align-items:center;text-align:center;justify-content:center}
+.slides{flex:1;overflow:hidden;position:relative;min-height:calc(var(--project-image-height) + var(--project-caption-height) + 1.5rem)}
+.slide{display:none;width:100%;padding:0.75rem;border-radius:8px;background:var(--card);box-shadow:0 6px 16px rgba(15,23,42,0.06);border:1px solid rgba(0,0,0,0.04);flex-direction:column;gap:0.75rem;align-items:center;text-align:center;justify-content:flex-start;min-height:calc(var(--project-image-height) + var(--project-caption-height))}
 .slide.is-active{display:flex}
-.media-placeholder{background:linear-gradient(135deg,var(--card),#fff);border:1px dashed rgba(0,0,0,0.06);height:180px;border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--muted);width:100%}
-.project-image{width:100%;height:auto;max-height:560px;border-radius:6px;object-fit:cover;box-shadow:0 6px 14px rgba(15,23,42,0.08)}
+.media-placeholder{background:linear-gradient(135deg,var(--card),#fff);border:1px dashed rgba(0,0,0,0.06);height:var(--project-image-height);border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--muted);width:100%}
+.project-image{width:100%;height:var(--project-image-height);border-radius:6px;object-fit:cover;box-shadow:0 6px 14px rgba(15,23,42,0.08)}
 .project-image--robot2{object-position:center 90%}
-.caption{color:var(--muted);font-size:0.95rem}
+.caption{color:var(--muted);font-size:0.95rem;height:var(--project-caption-height);display:flex;align-items:center;justify-content:center;text-align:center;padding:0 0.5rem}
 .slide-btn{background:transparent;border:1px solid rgba(0,0,0,0.06);padding:0.25rem 0.6rem;border-radius:6px;cursor:pointer}
 .slide-btn:hover{background:rgba(0,0,0,0.02)}
 
@@ -100,6 +102,11 @@ section[id]{scroll-margin-top:80px}
 .hardware-project-title{margin:0;font-size:1.08rem;font-weight:580;color:#1f2937;letter-spacing:0.005em}
 .hardware-project-title::after{content:"";display:block;width:40px;height:2px;margin-top:0.35rem;background:rgba(15,23,42,0.12);border-radius:999px}
 .hardware-project-description{margin:0.25rem 0 0;color:#475569;font-size:0.98rem;line-height:1.55}
+.hardware-project-description .project-link{font-weight:560;color:#1d4ed8;text-decoration:none}
+.hardware-project-description .project-link:hover{text-decoration:underline}
+.project-links{margin-top:1rem;display:flex;align-items:center;gap:0.75rem}
+.project-links .project-link{display:inline-flex;align-items:center;gap:0.4rem;padding:0.4rem 0.85rem;border-radius:999px;border:1px solid rgba(30,64,175,0.25);background:rgba(30,64,175,0.08);color:#1d4ed8;font-weight:560;text-decoration:none;transition:transform 0.2s ease, box-shadow 0.2s ease}
+.project-links .project-link:hover{transform:translateY(-1px);box-shadow:0 12px 24px rgba(30,64,175,0.18)}
 .hardware-slideshow{margin-top:0.25rem}
 
 /* Responsive: smaller buttons on mobile */
