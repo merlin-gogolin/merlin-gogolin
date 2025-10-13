@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Merlin Gogolin — Portfolio</title>
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="css/styles.css">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="icon" type="image/png" href="favicon.png" sizes="192x192">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -70,6 +70,10 @@
                 <img src="images/robot5.png" alt="Robot build detail" class="project-image" />
                 <div class="caption">CAD built alongside the physical robot.</div>
               </article>
+              <article class="slide" data-index="5">
+                <img src="images/robot6.jpeg" alt="Robot build detail 2" class="project-image" />
+                <div class="caption">Final competition, where I won multiple awards including highest point total.</div>
+              </article>
             </div>
             <button class="slide-btn next" aria-label="Next">›</button>
           </div>
@@ -127,6 +131,14 @@
             <p class="hardware-project-description">In-progress full-stack app, funded by MIT Sandbox, with the goal of democratizing access to high-quality and pertinent political news. Developed a unique algorithm using machine learning models to understand user preferences based on interactions and smartly recommend news articles. Includes ballot matching feature to help users find like-minded politicians up for election in local and national elections.</p>
           </div>
           <p class="muted">Beta version releasing to iOS in February</p>
+        </article>
+
+        <article class="hardware-project software-project">
+          <div class="hardware-project-header">
+            <h3 class="hardware-project-title">Automatic CAD Data Labeling Pipeline</h3>
+            <p class="hardware-project-description">Building a pipeline to automatically pull CAD parts from available OnShape repositories, parse their metadata, and convert to a programmatic and parametric CAD coding language being built alongside. Completing this circle will allow significant upgrades in future training on CAD parts.</p>
+          </div>
+          <p class="muted">Paper + GitHub repository coming soon</p>
         </article>
       </section>
 
@@ -262,7 +274,36 @@
 
       <section id="contact" class="card">
         <h2>Contact</h2>
-        <p class="muted">Email, social links, or a contact form later.</p>
+        <div class="contact-details" role="list">
+          <div class="contact-detail" role="listitem">
+            <span class="contact-detail-label">Email</span>
+            <span class="contact-detail-value" data-copy-value="merlino@mit.edu">merlino@mit.edu</span>
+            <button type="button" class="contact-action copy-button" data-copy="merlino@mit.edu" aria-label="Copy email to clipboard" data-label="Copy" data-feedback="">
+              <img src="images/copy-logo.svg" alt="" class="contact-icon" aria-hidden="true" />
+              <span class="sr-only">Copy email to clipboard</span>
+            </button>
+          </div>
+          <div class="contact-detail" role="listitem">
+            <span class="contact-detail-label">LinkedIn</span>
+            <span class="contact-detail-value" data-copy-value="https://www.linkedin.com/in/merlin-gogolin">linkedin.com/in/merlin-gogolin</span>
+            <a class="contact-action contact-link-button" href="https://www.linkedin.com/in/merlin-gogolin" target="_blank" rel="noopener noreferrer" aria-label="Open LinkedIn profile">
+              <img src="images/linkedin-logo.svg" alt="" class="contact-icon" aria-hidden="true" />
+              <span class="sr-only">Open LinkedIn profile</span>
+            </a>
+          </div>
+          <div class="contact-detail" role="listitem">
+            <span class="contact-detail-label">GitHub</span>
+            <span class="contact-detail-value" data-copy-value="https://github.com/merlin-gogolin">github.com/merlin-gogolin</span>
+            <a class="contact-action contact-link-button" href="https://github.com/merlin-gogolin" target="_blank" rel="noopener noreferrer" aria-label="Open GitHub profile">
+              <img src="images/github-logo.svg" alt="" class="contact-icon" aria-hidden="true" />
+              <span class="sr-only">Open GitHub profile</span>
+            </a>
+          </div>
+          <div class="contact-detail contact-detail--resume" role="listitem">
+            <span class="contact-detail-label">Resume</span>
+            <a class="project-link contact-resume-link" href="documents/Merlin_Gogolin_Resume.pdf" target="_blank" rel="noopener noreferrer">Open Resume</a>
+          </div>
+        </div>
       </section>
     </main>
 
@@ -322,6 +363,73 @@
         }
 
         document.querySelectorAll('.slideshow').forEach(initSlideshow);
+      })();
+
+      (function () {
+        const copyButtons = document.querySelectorAll('.copy-button');
+        if (!copyButtons.length) return;
+
+        const fallbackCopy = (text) => {
+          try {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.setAttribute('readonly', '');
+            textarea.style.position = 'absolute';
+            textarea.style.left = '-9999px';
+            document.body.appendChild(textarea);
+            textarea.select();
+            const successful = document.execCommand('copy');
+            document.body.removeChild(textarea);
+            return successful;
+          } catch (error) {
+            return false;
+          }
+        };
+
+        const showFeedback = (button, status) => {
+          const success = status === 'success';
+          const message = success ? 'Copied!' : 'Copy failed';
+          const originalLabel = button.dataset.originalLabel || button.getAttribute('aria-label') || 'Copy to clipboard';
+
+          if (!button.dataset.originalLabel) {
+            button.dataset.originalLabel = originalLabel;
+          }
+
+          button.setAttribute('data-feedback', message);
+          button.setAttribute('aria-label', message);
+          button.classList.toggle('is-copied', success);
+          button.classList.toggle('copy-error', !success);
+
+          window.clearTimeout(button._copyTimeout);
+          button._copyTimeout = window.setTimeout(() => {
+            button.classList.remove('is-copied', 'copy-error');
+            button.setAttribute('data-feedback', '');
+            button.setAttribute('aria-label', button.dataset.originalLabel || originalLabel);
+          }, 1800);
+        };
+
+        const copyValue = async (value) => {
+          try {
+            if (navigator.clipboard?.writeText) {
+              await navigator.clipboard.writeText(value);
+              return true;
+            }
+          } catch (error) {
+            // Fallback will handle below
+          }
+
+          return fallbackCopy(value);
+        };
+
+        copyButtons.forEach((button) => {
+          button.addEventListener('click', async () => {
+            const value = button.getAttribute('data-copy');
+            if (!value) return;
+
+            const didCopy = await copyValue(value);
+            showFeedback(button, didCopy ? 'success' : 'error');
+          });
+        });
       })();
     </script>
   </body>
